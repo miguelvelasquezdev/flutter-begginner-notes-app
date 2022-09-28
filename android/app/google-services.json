@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "820223383080",
+    "project_id": "notes-flutt-project",
+    "storage_bucket": "notes-flutt-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820223383080:android:ccf09b2ddcab3bdb4c471d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_course_for_beginners"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820223383080-2um2ffn28e61oh3226k2iut8vvtddfke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTzIEMj2-AQaWI-mFJEMCedo0d48_AFRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820223383080-2um2ffn28e61oh3226k2iut8vvtddfke.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "820223383080-jqraai55u659bre59otigu9ij89cliai.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterCourseForBeginners"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
