@@ -20,6 +20,7 @@ void main() {
       '/login': (context) => const LoginView(),
       '/register': (context) => const RegisterView(),
       '/verify-email': (context) => const VerifyEmailView(),
+      '/notes': (context) => const NotesView(),
     },
   ));
 }
@@ -39,15 +40,15 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                print('email is verified');
+                devtools.log('email is verified');
               } else {
-                print('email is not verified');
+                devtools.log('email is not verified');
                 return const VerifyEmailView();
               }
             } else {
               return const LoginView();
             }
-            return NotesView();
+            return const NotesView();
           default:
             return const Center(
               child: CircularProgressIndicator(),
@@ -61,7 +62,7 @@ class HomePage extends StatelessWidget {
 enum MenuAction { logout }
 
 class NotesView extends StatefulWidget {
-  NotesView({Key? key}) : super(key: key);
+  const NotesView({Key? key}) : super(key: key);
 
   @override
   State<NotesView> createState() => _NotesViewState();
