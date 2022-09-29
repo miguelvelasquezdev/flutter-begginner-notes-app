@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_course_for_beginners/constants/routes.dart';
+import 'package:flutter_course_for_beginners/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -68,11 +69,16 @@ class _LoginViewState extends State<LoginView> {
                   (route) => false,
                 );
               } on FirebaseAuthException catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(e.message ?? 'Error'),
-                  ),
-                );
+                if (e.code == 'user-not-found') {
+                  showErrorDialog(context, 'No user found for that email.');
+                } else if (e.code == 'wrong-password') {
+                  showErrorDialog(
+                      context, 'Wrong password provided for that user.');
+                } else {
+                  showErrorDialog(context, 'Error : ${e.code}');
+                }
+              } catch (e) {
+                showErrorDialog(context, 'Error : $e');
               }
               final userCredential = await FirebaseAuth.instance
                   .signInWithEmailAndPassword(email: email, password: password);
