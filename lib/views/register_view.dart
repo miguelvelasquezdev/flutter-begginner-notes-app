@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_course_for_beginners/constants/routes.dart';
+import 'package:flutter_course_for_beginners/services/auth/auth_exceptions.dart';
+import 'package:flutter_course_for_beginners/services/auth/auth_service.dart';
 import 'package:flutter_course_for_beginners/utilities/show_error_dialog.dart';
-import 'package:flutter_course_for_beginners/views/verify_email_view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -61,23 +61,19 @@ class _RegisterViewState extends State<RegisterView> {
               final password = _password.text;
 
               try {
-                await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
+                await AuthService.firebase()
+                    .createUser(email: email, password: password);
+                await AuthService.firebase().sendEmailVerification();
                 Navigator.of(context).pushNamed('/verify-email');
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'weak-password') {
-                  showErrorDialog(
-                      context, 'The password provided is too weak.');
-                } else if (e.code == 'email-already-in-use') {
-                  showErrorDialog(
-                      context, 'The account already exists for that email.');
-                } else if (e.code == 'invalid-email') {
-                  showErrorDialog(context, 'The email is invalid.');
-                } else {
-                  showErrorDialog(context, 'Error: ${e.code}');
-                }
+              } on WeakPasswordAuthException {
+                showErrorDialog(context, 'The password provided is too weak.');
+              } on EmailAlreadyInUseAuthException {
+                showErrorDialog(
+                    context, 'The account already exists for that email.');
+              } on InvalidEamilAuthException {
+                showErrorDialog(context, 'The email is invalid.');
+              } on GenericAuthException {
+                showErrorDialog(context, 'An error occured.');
               } catch (e) {
                 showErrorDialog(context, 'Error: $e');
               }
